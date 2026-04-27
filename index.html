@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>红与黑 · 灵魂光谱 | 测测你是书中的谁</title>
+    <!-- 文艺字体 红黑美学 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #130c08;
+            font-family: 'Inter', sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .test-container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #fef7ed;
+            background-image: radial-gradient(circle at 15% 30%, rgba(140, 80, 40, 0.03) 2%, transparent 2.5%);
+            background-size: 34px 34px;
+            border-radius: 42px;
+            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,245,225,0.8);
+            overflow: hidden;
+            border: 1px solid #d9be8c;
+        }
+
+        .hero {
+            background: linear-gradient(125deg, #2b140e 0%, #521f12 45%, #2a0e07 100%);
+            padding: 2rem 1.5rem 1.4rem;
+            text-align: center;
+            border-bottom: 3px solid #dc9f6b;
+        }
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 3rem;
+            letter-spacing: 4px;
+            color: #f4e3cf;
+            text-shadow: 3px 3px 0 #2e0f07;
+        }
+        .hero .sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #f0dbbd;
+            border-top: 1px solid #c07d4a;
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding-top: 0.4rem;
+        }
+        .intro-soft {
+            background: #2c1c14c9;
+            backdrop-filter: blur(4px);
+            margin: 0 1.8rem 1.2rem 1.8rem;
+            padding: 0.7rem 1rem;
+            border-radius: 60px;
+            text-align: center;
+            color: #fcf3e4;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        .home-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 1rem 1.8rem;
+        }
+        .btn-primary {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            border: none;
+            background: #81442f;
+            color: #fff2e6;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-secondary {
+            background: #2c1b13;
+            color: #f0ddcc;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.02);
+            background: #6b3926;
+        }
+        .home-quote {
+            text-align: center;
+            font-style: italic;
+            color: #8e6949;
+            margin: 1rem 0 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            border-top: 1px dashed #e1c8ab;
+            padding-top: 1.5rem;
+        }
+
+        .progress-area {
+            padding: 0.9rem 2rem 0rem;
+        }
+        .counter {
+            text-align: right;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #8b5a3a;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        .progress-bg {
+            background: #e9dbc9;
+            border-radius: 30px;
+            height: 6px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: #b44f2e;
+            width: 0%;
+            height: 100%;
+            transition: width 0.25s ease;
+            border-radius: 30px;
+        }
+
+        .quiz-card {
+            padding: 0.6rem 2rem 2rem;
+        }
+        .question {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 1.9rem;
+            line-height: 1.3;
+            margin-bottom: 1.8rem;
+            color: #332215;
+            border-left: 5px solid #c57f4a;
+            padding-left: 1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .opt {
+            background: #fffbf4;
+            border: 1px solid #e6d3b8;
+            border-radius: 100px;
+            padding: 0.85rem 1.5rem;
+            font-size: 0.96rem;
+            font-weight: 450;
+            color: #2e241c;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .opt:hover {
+            background: #f9ecdd;
+            border-color: #bc7848;
+            transform: translateX(5px);
+        }
+        .opt-prefix {
+            font-family: monospace;
+            font-weight: 700;
+            background: #e8d9c8;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            color: #673c22;
+        }
+        .opt.selected {
+            background: #ecddcc;
+            border-color: #9b5a34;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .opt.selected .opt-prefix {
+            background: #9b5a34;
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 0.3rem;
+        }
+        button {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            padding: 0.7rem 1.8rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #eee1cf;
+            border: 1px solid #cfb486;
+            color: #402d1c;
+        }
+        button.next {
+            background: #82452f;
+            border: none;
+            color: #fff2e6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        button.next:hover:not(:disabled) {
+            background: #5a2d1d;
+            transform: scale(0.97);
+        }
+        button.prev:hover:not(:disabled) {
+            background: #dbc7a8;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .result-panel {
+            padding: 2rem;
+            background: #fffaf2;
+            border-top: 2px solid #eedbc2;
+            text-align: center;
+        }
+        .result-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #732f1a;
+            border-bottom: 2px dashed #d8b070;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        .analysis-text {
+            font-size: 1rem;
+            line-height: 1.68;
+            color: #2e231b;
+            margin: 1.5rem 0;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+        .restart-btn {
+            background: #c88657;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #bf946c;
+            padding: 1rem 0 1.2rem;
+            border-top: 1px solid #f0e2cf;
+            background: #fef7ed;
+        }
+
+        .modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-container {
+            background: #fffaf0;
+            max-width: 550px;
+            width: 90%;
+            max-height: 85vh;
+            border-radius: 32px;
+            overflow-y: auto;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.4);
+            border: 1px solid #e1c5a0;
+        }
+        .modal-header {
+            background: #2b1c14;
+            padding: 1rem 1.5rem;
+            color: #f2e0cf;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-close {
+            font-size: 1.7rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #eacbaa;
+        }
+        .modal-content {
+            padding: 1.2rem 1.5rem;
+        }
+        .char-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .char-item {
+            border-bottom: 1px solid #efddcd;
+            padding: 10px 0;
+            cursor: pointer;
+        }
+        .char-name {
+            font-weight: 700;
+            color: #73371f;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .char-keywords {
+            font-size: 0.75rem;
+            color: #a0704a;
+            margin-top: 4px;
+        }
+        .char-bio {
+            font-size: 0.85rem;
+            color: #2a241f;
+            margin-top: 8px;
+            line-height: 1.4;
+            background: #fef4e8;
+            padding: 10px;
+            border-radius: 16px;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .quiz-card { padding: 0.4rem 1.2rem 1.6rem; }
+            .question { font-size: 1.5rem; }
+            .opt { padding: 0.6rem 1rem; }
+            .hero h1 { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="test-container" id="appRoot">
+    <div class="hero">
+        <h1>LE ROUGE ET LE NOIR</h1>
+        <div class="sub">· 灵魂光谱 · 你属于哪种角色 ·</div>
+    </div>
+    <div id="dynamicContent"></div>
+    <footer>⚜️ 司汤达 · 红与黑 | 文学映照真实 ⚜️</footer>
+</div>
+
+<script>
+    // ---------- 25道题库（完整版）----------
+    const QUESTIONS = [
+        { text: "周末早上10点醒来，你第一件事是：", opts: ["刷手机看有没有人找我", "赖床到12点，然后后悔", "立刻起床，列今日计划表", "发条动态", "继续睡，谁也别拦我"] },
+        { text: "手机掉进厕所里，你的第一反应是：", opts: ["冷静捞起来，然后默默心疼钱", "当场哭出来", "大喊一声“啊——！”", "立刻想“正好换个新的”", "愣住三秒，然后面无表情处理"] },
+        { text: "你最不能忍受的是：", opts: ["被人看不起", "被人忽略", "被人骗", "被人管", "被人吵"] },
+        { text: "朋友跟你借钱，说下个月还，你会：", opts: ["借，但记在小本本上", "直接转账，不问原因", "问东问西，最后借一半", "不借，但说“我帮你问问别人”", "“我没钱，要不你请我吃饭？”"] },
+        { text: "你的理想生活是：", opts: ["站在高处，让以前看不起我的人闭嘴", "岁月静好，有猫有花园", "每天都有新鲜事，绝不重复", "钱多事少，没人管我", "清静、自律、谁也不欠谁"] },
+        { text: "你在商场被人插队，会：", opts: ["心里骂一万句，但什么也不说", "小声说“不好意思，是我先来的”", "大声喊“这位朋友是不是有急事啊？”", "直接走到他前面，反插回去", "换一条队，不跟他一般见识"] },
+        { text: "老板在会上批评了你（其实是他的锅），你会：", opts: ["忍着，回去写日记骂他", "当场委屈到说不出话", "微笑着解释，但句句带刺", "会后找HR聊", "下班后跟朋友吐槽一晚上"] },
+        { text: "去餐厅吃饭，你一般怎么点菜？", opts: ["先看价格，再决定吃什么", "点自己最爱吃的那几样，从不踩雷", "专门挑没吃过的，踩雷也认了", "让服务员推荐招牌菜", "“你们先点，我随便”"] },
+        { text: "收到一份不想要的礼物，你会：", opts: ["礼貌道谢，转头就挂二手平台", "真的开心，因为有人记得我", "当场说：“这个我不太用哎，能换一个吗？”", "收下，下次回赠一个差不多的", "放着落灰，忘了它"] },
+        { text: "你更喜欢哪种聚会？", opts: ["小型饭局，能聊深度的", "户外野餐，轻松晒太阳", "折腾剧本杀或密室", "商务酒局，认识有用的人", "不去，在家待着最舒服"] },
+        { text: "有人说你“情商低”，你会：", opts: ["爆炸：“你懂什么！”", "难过好几天", "回怼：“你情商高？你高你上啊。”", "笑笑说“谢谢建议”，然后当没听见", "认真思考对方说的是不是对的"] },
+        { text: "你更喜欢哪种影视角色？", opts: ["草根逆袭的反派", "温柔悲情的主角", "神秘又骄傲的贵族小姐/公子", "精明算计的商人", "正直严厉的长者"] },
+        { text: "对于“社交”这件事，你的态度是：", opts: ["必要的手段，虽然烦", "温暖的日常", "有趣的游戏", "梯子，得爬", "能免则免"] },
+        { text: "如果中奖500万，你的第一步是：", opts: ["辞职，然后去读个名校", "给家人买房子", "环游世界，发很多照片", "投资，让钱生钱", "存起来，谁也不告诉"] },
+        { text: "你更害怕：", opts: ["一生平庸", "孤独终老", "无聊到死", "穷", "失控"] },
+        { text: "你觉得自己更像哪种动物？", opts: ["蛇", "鸽子", "孔雀", "狐狸", "猫头鹰"] },
+        { text: "朋友跟你诉苦，你会：", opts: ["给解决方案：“你应该这样……”", "共情，安静地听着", "用更夸张的故事安慰他：“你这不算啥，我当年……”", "理性分析利弊：“你先说你想不想要这个结果”", "听完了说一句：“那你想怎么办？”"] },
+        { text: "你心中完美的一天包含：", opts: ["一个成就（比如项目上线、比赛赢了）", "和喜欢的人待在一起", "一场惊喜或意外", "赚到一笔意外之财", "没人找我，安静看书"] },
+        { text: "如果你是一本书的标题，你会叫：", opts: ["《我命由我不由天》", "《温柔地离开世界》", "《别惹我，我疯起来自己都怕》", "《向上社交：从入门到精通》", "《关你什么事》"] },
+        { text: "你觉得自己本质上是：", opts: ["一个愤怒的理想主义者", "一个柔软的悲观主义者", "一个骄傲的浪漫主义者", "一个精明的现实主义者", "一个清醒的旁观者"] },
+        { text: "在爱情里，你更倾向于：", opts: ["征服对方，证明自己的魅力", "默默付出，哪怕没有回报", "追求戏剧性，爱就要轰轰烈烈", "感情是生活的调剂，不必太认真", "理智至上，不被感情左右"] },
+        { text: "你发现同事在背后说你坏话，你会：", opts: ["当面质问，让他给个说法", "心里难过，但装作不知道", "找机会在领导面前让他难堪", "无所谓，不影响我拿工资就行", "反思自己是不是真的有问题"] },
+        { text: "如果被喜欢的人拒绝了，你会：", opts: ["更加努力证明自己，让他后悔", "伤心很久，但不会怨恨", "很快转移目标，证明自己依然有魅力", "无所谓，本来也没抱期望", "默默离开，但记在心里"] },
+        { text: "你对“阶层”的看法是：", opts: ["阶层是可以被打破的，我会是那个破局者", "阶层存在且固化，但我安于自己的位置", "我生来就属于某个阶层，不会向下兼容", "阶层是工具，能往上爬就绝不手软", "阶层与我无关，我只在意对错"] },
+        { text: "做完这么多题，你现在的感觉是：", opts: ["挺有意思，期待结果", "有点累，但好奇", "能不能快点出结果", "选择题好难选", "无所谓，看看就好"] }
+    ];
+
+    // ---------- 角色深度分析（完整版，保持不变）----------
+    const FULL_ANALYSIS = {
+        "于连·索雷尔": `你像于连——一个内心燃烧着火焰的 outsider。
+
+你聪明、敏感、自尊心极强。表面上你可能冷静克制，但内心时刻在进行着一场“自我证明”的战争。你渴望被认可，又害怕被看轻；你鄙视权贵的手段，却又想拥有他们的位置。这种矛盾是你的痛苦之源，也是你不断向上的动力。
+
+你不甘平庸。对你来说，人生最大的失败不是跌倒，而是从未尝试攀登。你可能会在深夜读传记、列计划、幻想逆袭的那一刻——不是为了虚荣，而是为了证明“我本不该在这里”。
+
+但于连式的困境也提醒你：真正的自由，或许不是打败别人的游戏，而是找到一种不需要向任何人证明的自信。`,
+
+        "德·雷纳尔夫人": `你是德·雷纳尔夫人——温柔，但绝不是软弱。
+
+你有一颗很容易被打动的心。你善良、真诚，愿意为在乎的人付出一切。在这个人人都喊着“搞钱”和“搞事业”的时代，你仍然相信感情的重量。你不擅长算计，也不喜欢冲突，但这不代表你没有勇气——当真正重要的东西受到威胁时，你会发现内心深处藏着一股意想不到的决绝。
+
+你的悲剧模式是：常常把别人的需求放在自己之前。你会记住每个人的生日，会为了不让别人难过而委屈自己。这不是缺点，但你需要知道：你的善良需要有边界。
+
+德·雷纳尔夫人最终选择忠于自己的内心，哪怕是飞蛾扑火。你不是没有力量，你只是把力量放在了爱里。`,
+
+        "玛蒂尔德": `你是玛蒂尔德——高傲、聪明，且永远在寻找意义。
+
+你厌倦一切平庸的东西。普通人追求的安全感、稳定、按部就班，对你来说简直是慢性死亡。你要的是戏剧性、是燃烧、是被记住。你有一种与生俱来的骄傲，这种骄傲让你无法接受随波逐流的人生。
+
+你在感情和事业上都带着一种“要么全有，要么全无”的决绝。你崇拜强者，但只崇拜那种你配得上的强者；你渴望被征服，但前提是对方必须先赢得你的尊重。这是一种近乎自虐的高标准，但也正是这种标准，让你拒绝成为“随便什么人”。
+
+玛蒂尔德的困境是：她太聪明，所以很难真正满足。你的挑战或许是学会在不那么极致的事物里，找到持久的温度。`,
+
+        "瓦勒诺先生": `你是瓦勒诺先生——现实主义大师。
+
+你不纠结。你想要什么，就直接去要，而且你很知道怎么要。你看得懂规则，也看得懂人，你擅长在复杂的局面里找到对自己最有利的位置。你不是坏人，你只是不相信“清高”能当饭吃。
+
+你可能被一些人评价为“功利”，但你心里清楚：这个世界不会因为你善良就对你善良。你相信结果证明一切，而你也确实总能拿到结果。你的社交能力、执行力和对机会的嗅觉，都是你安身立命的武器。
+
+但瓦勒诺的局限性也很明显：当一切都被折算成利益，那些无法被定价的东西——真诚、忠诚、无条件的信任——也会悄悄从你生命中流失。偶尔问一问自己：你想要的东西，真的都值得吗？`,
+
+        "谢兰神父": `你是谢兰神父——正直、朴素、且原则分明。
+
+你不追求名利，也不羡慕那些活得轰轰烈烈的人。你有自己的一套道德标准，并且愿意为之坚守。你可能不会成为人群中最耀眼的那一个，但你知道自己是谁、要什么、不要什么。这种清醒，在这个浮躁的时代，比任何成功学都珍贵。
+
+谢兰神父的智慧在于：他不需要通过征服世界来证明自己的价值。他做好分内的事，帮助该帮助的人，然后平静地过每一天。他不是没有能力往上爬，而是选择了一种更体面的活法。
+
+你的挑战是不要因为过度清醒而变得冷漠。看透世界之后，仍然愿意爱这个世界的一部分——谢兰神父做到了，你也可以。`,
+
+        "拉莫尔侯爵": `你是拉莫尔侯爵——精明、克制、懂得权力的游戏。
+
+你不轻易表态，但每一步都经过计算。你欣赏才华，但更看重忠诚和出身。你愿意给年轻人机会，前提是他们不威胁到你的地位。你是一个现实主义者，但比瓦勒诺先生多了一层体面和审慎。
+
+你的困境是：你太清楚规则，所以很少真正冒险。你赢得了尊重，却可能失去了激情。偶尔问自己：那些被你放弃的冲动，真的不值得吗？`,
+
+        "埃莉莎": `你是埃莉莎——默默付出，心中有爱也有怨。
+
+你是那个总是被忽略的人。你照顾别人的生活，却很少有人问你需要什么。你有自己的渴望，但你知道自己的位置，所以大多时候选择沉默。但这不代表你没有心——你的爱深沉、真实，一旦被辜负，也会变成锋利的恨。
+
+埃莉莎的悲剧是：她的忠诚没有被看见。你的课题是：不要等到忍无可忍才发声，学会在安静中为自己争取一点点光亮。`,
+
+        "德·雷纳尔先生": `你是德·雷纳尔先生——务实、保守、维护秩序的人。
+
+你相信规矩、等级和稳定的生活。你不是坏人，但你更在意事情是否“体面”而非是否“正确”。你对上恭敬，对下保持距离，对妻子有一种占有式的关心而非平等的爱。你的人生信条是：不出错就是最大的成功。
+
+你的局限在于：你太害怕变化，所以容易错过真正的幸福。偶尔放下“体面”的包袱，问问自己内心真正想要什么。`,
+
+        "老索雷尔": `你是老索雷尔——实用主义之父，利益至上。
+
+你不相信梦想，只相信看得见的好处。你对自己的儿子苛刻，不是因为你恨他，而是因为你认为“有用”才是衡量一切的标准。你的严厉背后是一种扭曲的关心：你害怕他吃亏。但你的方式，让他一辈子都在证明自己值得被爱。
+
+你的课题是：学会用柔软的方式表达在意，而不是让亲情变成一笔笔交易。`,
+
+        "元帅夫人": `你是元帅夫人——渴望被爱，却总在错的人身上浪费真心。
+
+你年轻时或许光彩照人，如今风韵犹存，但内心深处仍然住着一个渴望浪漫的小女孩。你容易被甜言蜜语打动，容易把短暂的温柔当成永恒。你并不愚蠢，你只是太寂寞了。
+
+元帅夫人的悲剧是：她把爱情的幻影当成了救命稻草。你的课题是：学会分辨“被需要”和“被爱”，不要把余生押注在不肯为你停留的人身上。`,
+
+        "阿芒达·比内": `你是阿芒达·比内——在底层挣扎，却从未丢掉善良的本能。
+
+你可能做着不起眼的工作，拿着不高的薪水，但你仍然愿意对路过的人释放善意。你见过生活的残酷，但你选择不变成那种冷酷的人。你心动过的那个过客，可能早就忘了你，但你记得那份温暖——这就够了。
+
+阿芒达的智慧是：她不指望任何人来拯救，但她也不拒绝任何真实的瞬间。你的课题是：在现实和理想之间，找到那条既不委屈自己、也不伤害别人的路。`,
+
+        "拿破仑": `你不是于连，你是于连做梦都想成为的那个人。你有巨大的野心和同样巨大的自信。对你来说，“不可能”只是“还没想到办法”的同义词。但注意：拿破仑的结局也提醒我们，野心需要有一个比“自我”更大的支点。`,
+
+        "富凯": `你是朋友圈里的定海神针。你不争不抢，但别人都知道你最可靠。你不是主角，但所有主角都离不开你。在这个人人想红的世界里，你选择做一个扎实的普通人——这其实是一种罕见的清醒。`,
+
+        "科拉索夫亲王": `你是一个方法论者。不管是追人、搞钱还是解决问题，你总能拿出一套“操作手册”。你自己可能不亲自下场，但你的建议往往比你的行动更精彩。缺点是：理论满分，实战看心情。`
+    };
+
+    // 生平库（已按您的要求修改：德·雷纳尔夫人、德·雷纳尔先生、元帅夫人、拿破仑）
+    const BIOGRAPHIES = {
+        "于连·索雷尔": "木匠之子，出生在小城维立叶尔。他身材瘦弱，不擅长体力劳动，常被父亲和哥哥们打骂。但他惊人的记忆力让他学会了拉丁文，成为德·雷纳尔家的家庭教师。他崇拜拿破仑，渴望像他一样逆天改命。他与德·雷纳尔夫人私情暴露后逃往巴黎，又用才华征服了拉莫尔侯爵和其女玛蒂尔德。就在他即将成为贵族女婿时，德·雷纳尔夫人的一封信毁了他的前程。他开枪射伤她，被判死刑。在法庭上，他没有求饶，而是怒斥贵族对底层人的审判。他坦然走上断头台，年仅23岁。",
+        "德·雷纳尔夫人": "维立叶尔市长夫人，温柔、善良，从不摆贵族架子。她觉得家庭教师总会有些鲁莽，后来却被他身上那股不服输的倔强打动。她在婚内出轨，内心充满罪恶感，但又无法自拔。她深爱于连，甚至在于连开枪打伤她之后仍然选择原谅他，去监狱探望他。于连死后三天，她也抱病去世。她是书中“真心”的代表。",
+        "玛蒂尔德": "拉莫尔侯爵的掌上明珠，19岁。她厌倦贵族圈的无聊追求者，当于连这个高傲的平民出现时，她被他身上那种“随时可以发怒”的野性吸引。她主动追求于连，为他怀孕。于连死后，她真的买下他的头颅，亲手埋葬在汝拉山顶的一个山洞里。",
+        "瓦勒诺先生": "维立叶尔收容所所长，后来成为男爵，最终当上省长。他虚荣、善于钻营，是于连最鄙视的那类人。他嫉妒于连得到德·雷纳尔夫人的青睐，多次想毁掉于连。但讽刺的是，他这样的人偏偏在复辟时期如鱼得水。",
+        "谢兰神父": "维立叶尔的老本堂神父，于连的启蒙恩师。他生活简朴，把教会发给他的钱全部捐给穷人。他看不惯瓦勒诺的虚伪做派，敢公开叫板。于连落难时，老人已双目失明，仍坚持去监狱看望他。",
+        "拉莫尔侯爵": "复辟王朝的贵族领袖，政治手腕极其老练。他欣赏于连的才华，给了于连贵族身份和财产。但当得知女儿怀了于连的孩子后，他愤怒但最终勉强同意婚事。然而德·雷纳尔夫人的揭发信让他彻底改变主意。",
+        "埃莉莎": "德·雷纳尔夫人家的女仆，从远亲那里继承了一大笔遗产。她真心爱慕于连，但于连看不上她。被拒绝后她由爱生妒，向谢兰神父告发了于连与德·雷纳尔夫人的私情。",
+        "德·雷纳尔先生": "维立叶尔市长，重视名誉和体面胜过一切。他对妻子的管束更像占有而非爱护。于连枪击德·雷纳尔夫人后，他首先是愤怒，但旋即担心家丑外扬。",
+        "老索雷尔": "于连的父亲，锯木厂老板。他粗鲁、势利，只从实用角度理解儿子。于连被审判后，他拒绝花钱为儿子上诉，甚至在得知瓦勒诺愿意出钱时还想分赃。",
+        "元帅夫人": "风韵犹存的贵族寡妇，她渴望真挚的爱情，对于连动了真心，但于连只把她当成攀附贵族的工具。",
+        "阿芒达·比内": "贝藏松的咖啡馆女招待，出身贫寒。她对于连有好感，但于连当时一心向上爬，刻意拒绝了她。她没有怨恨，继续在咖啡馆里忙碌。",
+        "拿破仑": "于连一生的精神偶像。凭借军功在乱世中崛起，打破欧洲的封建秩序。于连无数次在深夜捧着《圣赫勒拿岛回忆录》入睡。",
+        "富凯": "于连在神学院时期的朋友，木材商人。于连飞黄腾达时他不来巴结，于连入狱后他四处奔走想救他。于连死后，他把于连留下的钱分给了穷人。",
+        "科拉索夫亲王": "俄国贵族，于连的情感导师。他把情感变成一场可以推演的棋局，教于连如何在欲擒故纵中赢得玛蒂尔德的爱情。"
+    };
+
+    // 角色判定（基于25题）
+    function getCharacter(answers) {
+        let cnt = {A:0,B:0,C:0,D:0,E:0};
+        for(let a of answers) cnt[a]++;
+        const A=cnt.A, B=cnt.B, C=cnt.C, D=cnt.D, E=cnt.E;
+        if(A>=7 && D>=6) return "拉莫尔侯爵";
+        if(B>=7 && E>=5) return "埃莉莎";
+        if(B>=8 && (D+E)>=5 && A<=4) return "德·雷纳尔先生";
+        if(A>=8 && D>=5 && B<=4) return "老索雷尔";
+        if((B>=6 && C>=4) && (answers[20]==='B'||answers[20]==='C')) return "元帅夫人";
+        if((B>=5 && E>=5) && A<=5 && D<=5) return "阿芒达·比内";
+        if(A>=8 && D>=7) return "拿破仑";
+        if(B>=6 && C>=6) return "富凯";
+        if(C>=18) return "科拉索夫亲王";
+        let maxLetter='A',maxV=0;
+        for(let [k,v] of Object.entries(cnt)) if(v>maxV){maxV=v;maxLetter=k;}
+        const mainMap={A:"于连·索雷尔",B:"德·雷纳尔夫人",C:"玛蒂尔德",D:"瓦勒诺先生",E:"谢兰神父"};
+        return mainMap[maxLetter];
+    }
+
+    // 页面状态
+    let currentPage = "home";
+    let answersArr = new Array(25).fill(null);
+    let quizIndex = 0;
+    let resultCharacter = "";
+    const container = document.getElementById('dynamicContent');
+
+    function render() {
+        if (currentPage === "home") renderHome();
+        else if (currentPage === "quiz") renderQuestion(quizIndex);
+        else if (currentPage === "result") renderResult();
+    }
+
+    function renderHome() {
+        container.innerHTML = `
+            <div class="home-buttons">
+                <button class="btn-primary" id="knowBtn">📖 了解人物</button>
+                <button class="btn-primary" id="startBtn">✨ 开始做题</button>
+            </div>
+            <div class="home-quote">“一部小说是一面沿途行走的镜子。”<br>—— 司汤达<br><span style="font-size:0.8rem;">25道选择题，凭直觉作答，测出你最像《红与黑》中的谁。</span></div>
+        `;
+        document.getElementById('knowBtn')?.addEventListener('click', showCharacterModal);
+        document.getElementById('startBtn')?.addEventListener('click', () => {
+            currentPage = "quiz";
+            quizIndex = 0;
+            answersArr.fill(null);
+            resultCharacter = "";
+            render();
+        });
+    }
+
+    function showCharacterModal() {
+        const modalDiv = document.createElement('div');
+        modalDiv.className = 'modal-mask';
+        let charItems = '';
+        for (let name of Object.keys(BIOGRAPHIES)) {
+            let keywords = "";
+            if(name === "于连·索雷尔") keywords = "野心与自卑交织的逆袭者";
+            else if(name === "德·雷纳尔夫人") keywords = "温柔而勇敢的真心者";
+            else if(name === "玛蒂尔德") keywords = "高傲浪漫的贵族之女";
+            else if(name === "瓦勒诺先生") keywords = "精明务实的利己主义者";
+            else if(name === "谢兰神父") keywords = "正直朴素的精神导师";
+            else if(name === "拉莫尔侯爵") keywords = "克制审慎的权力玩家";
+            else if(name === "埃莉莎") keywords = "隐忍深情的底层女仆";
+            else if(name === "德·雷纳尔先生") keywords = "保守体面的秩序维护者";
+            else if(name === "老索雷尔") keywords = "利益至上的实用主义父亲";
+            else if(name === "元帅夫人") keywords = "渴望被爱的寂寞贵妇";
+            else if(name === "阿芒达·比内") keywords = "底层谋生但心存善意";
+            else if(name === "拿破仑") keywords = "征服世界的野心化身";
+            else if(name === "富凯") keywords = "忠厚可靠的挚友";
+            else if(name === "科拉索夫亲王") keywords = "情感战术大师";
+            else keywords = "点击查看生平";
+            charItems += `<div class="char-item" data-name="${name}">
+                <div class="char-name">${name}<span style="font-size:12px;">▼</span></div>
+                <div class="char-keywords">${keywords}</div>
+                <div class="char-bio">${BIOGRAPHIES[name]}</div>
+            </div>`;
+        }
+        modalDiv.innerHTML = `<div class="modal-container"><div class="modal-header"><span>📜 红与黑人物志</span><button class="modal-close">&times;</button></div><div class="modal-content"><div class="char-list">${charItems}</div></div></div>`;
+        document.body.appendChild(modalDiv);
+        modalDiv.querySelectorAll('.char-item').forEach(item => {
+            const bioDiv = item.querySelector('.char-bio');
+            item.addEventListener('click', () => {
+                const isVisible = bioDiv.style.display === 'block';
+                bioDiv.style.display = isVisible ? 'none' : 'block';
+            });
+        });
+        modalDiv.querySelector('.modal-close').onclick = () => modalDiv.remove();
+    }
+
+    function renderQuestion(idx) {
+        const q = QUESTIONS[idx];
+        const selected = answersArr[idx];
+        const letters = ['A','B','C','D','E'];
+        let optsHtml = '';
+        q.opts.forEach((opt, i) => {
+            const letter = letters[i];
+            const selClass = selected === letter ? 'selected' : '';
+            optsHtml += `<div class="opt ${selClass}" data-letter="${letter}"><div class="opt-prefix">${letter}</div><div>${escapeHtml(opt)}</div></div>`;
+        });
+        const percent = (idx / 25) * 100;
+        container.innerHTML = `
+            <div class="progress-area">
+                <div class="counter">${idx+1} / 25</div>
+                <div class="progress-bg"><div class="progress-fill" style="width: ${percent}%;"></div></div>
+            </div>
+            <div class="quiz-card">
+                <div class="question">${escapeHtml(q.text)}</div>
+                <div class="options" id="optionsList">${optsHtml}</div>
+                <div class="nav-buttons">
+                    <button class="prev" ${idx===0 ? 'disabled' : ''} id="prevBtn">◀ 上一题</button>
+                    <button class="next" id="nextBtn">${idx===24 ? '✦ 揭示角色 ✦' : '下一题 ▶'}</button>
+                </div>
+            </div>
+        `;
+        document.querySelectorAll('.opt').forEach(el => {
+            el.addEventListener('click', () => {
+                const letter = el.getAttribute('data-letter');
+                answersArr[idx] = letter;
+                renderQuestion(idx);
+            });
+        });
+        document.getElementById('prevBtn')?.addEventListener('click', () => { if(idx > 0) { quizIndex--; render(); } });
+        document.getElementById('nextBtn')?.addEventListener('click', () => {
+            if(!answersArr[idx]) { alert("请先选择一个选项 🌹"); return; }
+            if(idx === 24) {
+                resultCharacter = getCharacter(answersArr);
+                currentPage = "result";
+                render();
+            } else {
+                quizIndex++;
+                render();
+            }
+        });
+    }
+
+    function renderResult() {
+        const analysis = FULL_ANALYSIS[resultCharacter] || FULL_ANALYSIS["于连·索雷尔"];
+        container.innerHTML = `
+            <div class="result-panel">
+                <div class="result-title">⚜️ ${resultCharacter} ⚜️</div>
+                <div class="analysis-text">${escapeHtml(analysis).replace(/\n/g, '<br>')}</div>
+                <button class="restart-btn" id="restartBtn">⟳ 重新测试</button>
+            </div>
+        `;
+        document.getElementById('restartBtn')?.addEventListener('click', () => {
+            currentPage = "home";
+            render();
+        });
+    }
+
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    render();
+</script>
+</body>
+</html>
